@@ -1,0 +1,18 @@
+  app:
+    restart: always
+    build: .
+    environment:
+      - PORT=80
+    links:
+      - db
+  db:
+    image: mongo
+    expose:
+      - 27017
+  lb:
+    image: 'dockercloud/haproxy:latest'
+    links:
+      - app
+    ports:
+      - '8080:80'
+
